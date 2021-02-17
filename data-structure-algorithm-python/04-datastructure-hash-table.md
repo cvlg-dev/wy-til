@@ -115,7 +115,7 @@ storage_data('Trump', '01022223333')
 
 
 ```python
-hash_table
+print(hash_table)
 ```
 
 
@@ -203,7 +203,6 @@ read_data('Dave')
 # 4. 해시 충돌(Hash Collision) 처리를 위한 문제 접근 방법
 
 ![](https://i.stack.imgur.com/Hw21c.png)
-https://stackoverflow.com/questions/39375600/what-hash-function-produces-the-maximum-number-of-collisions-when-hashing-n-keys
 
 ## 4.1. Separate Chaining 방식
 
@@ -319,7 +318,7 @@ save_data('Johnson', '0000000000')
 
 
 ```python
-hash_table
+print(hash_table)
 ```
 
 
@@ -443,7 +442,7 @@ save_data('Johnson', '0000000000')
 
 
 ```python
-hash_table
+print(hash_table)
 ```
 
 
@@ -595,7 +594,7 @@ save_data('Johnson', '0000000000')
 
 
 ```python
-hash_table
+print(hash_table)
 ```
 
 
