@@ -5,6 +5,7 @@
 - 키(Key)에 데이터(Value)가 매핑되어 저장되어 있는 구조
     - Key를 통해 데이터를 바로 받아올 수 있으므로, 속도가 빠름
     - 파이썬에서는 딕셔너리(Dictionary)가 해쉬 테이블의 예시.
+    
     ```python
     dict = {"key": "value"}
     ```
@@ -46,24 +47,22 @@
 - 캐쉬 구현
     - 이미 데이터가 캐시에 있는지 없는지 중복확인을 할 때 해시테이블이 용이하게 적용됨.
 
+&nbsp
+
 # 2. 파이썬을 통한 해쉬함수 이해
 
 ## 2.1. Hash Table
 
 ### 2.1.1. Slot
 
-
 ```python
 hash_table = list([i for i in range(10)])
 hash_table
 ```
 
-
-
-
+```pure_text
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-
+```
 
 ### 2.1.2. Hash Function
 
@@ -71,14 +70,12 @@ hash_table
 - Division 방식은 가장 기본적인 형태로 알려져 있음.
     - 특정 값으로 나눈 후 나머지 값을 이용하는 기법.
 
-
 ```python
 def hash_func(key):
     return key % 5
 ```
 
 ### 2.1.3. 데이터 준비
-
 
 ```python
 data1 = 'Andy'
@@ -91,13 +88,13 @@ print (ord(data1[0]), hash_func(ord(data1[0])))
 print (ord(data1[0]), ord(data4[0]))
 ```
 
+```pure_text
     65 68 84
     65 0
     65 65
-
+```
 
 ### 2.1.4. 데이터 저장
-
 
 ```python
 def storage_data(data, value):
@@ -106,27 +103,21 @@ def storage_data(data, value):
     hash_table[hash_address] = value
 ```
 
-
 ```python
 storage_data('Andy', '01055553333')
 storage_data('Dave', '01044443333')
 storage_data('Trump', '01022223333')
 ```
 
-
 ```python
 print(hash_table)
 ```
 
-
-
-
+```pure_text
     ['01055553333', 1, 2, '01044443333', '01022223333', 5, 6, 7, 8, 9]
-
-
+```
 
 ### 2.1.4. 데이터 읽기
-
 
 ```python
 def get_data(data):
@@ -135,23 +126,20 @@ def get_data(data):
     return hash_table[hash_address]
 ```
 
-
 ```python
 get_data('Andy')
 ```
 
-
-
-
+```pure_text
     '01055553333'
+```
 
-
+&nbsp
 
 ## 3. 파이썬 예시
 
 - 해시함수를 다르게 설정하고 일괄적으로 저장, 추출까지 설정했을 때.
     - 해시함수 : `key % 8`
-
 
 ```python
 hash_table = list([0 for i in range(10)])
@@ -172,37 +160,34 @@ def read_data(data):
     return hash_table[hash_address]
 ```
 
-
 ```python
 # 데이터 저장
 save_data('Dave', '01020302000')
 save_data('Andy', '01033232200')
 ```
 
-
 ```python
 print(hash_table)
 ```
 
+```pure_text
     ['01033232200', 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-
+```
 
 ```python
 # 데이터 읽기
 read_data('Dave')
 ```
 
-
-
-
+```pure_text
     '01033232200'
+```
 
-
+&nbsp
 
 # 4. 해시 충돌(Hash Collision) 처리를 위한 문제 접근 방법
 
-![](https://i.stack.imgur.com/Hw21c.png)
+![](https://i.stack.imgur.com/Hw21c.png#center)
 
 ## 4.1. Separate Chaining 방식
 
@@ -210,13 +195,12 @@ read_data('Dave')
 - 충돌이 일어났을 때, 데이터를 뒤에 추가로 저장.
     - 이 때, 다양한 자료구조를 활용하며 Linked List가 하나의 예가 될 수 있음. (Separate chaining with linked list)
 
-![](https://he-s3.s3.amazonaws.com/media/uploads/0e2c706.png)
+![](https://he-s3.s3.amazonaws.com/media/uploads/0e2c706.png#center)
 
 ### 4.1.1. Separate chaining with Linked List
 
 - 데이터 저장 시, 동일한 hash_address가 존재하여 충돌이 발생하면, Linked list에 노드를 추가하여 값을 추가함. (파이썬으로는 일반 리스트로 구현함)
 - 데이터 추출 시, hash_address에 대하여 선형 탐색하며, 해당 key에 대한 데이터를 검색 후 결과를 리턴함.
-
 
 ```python
 def get_key(data):
@@ -253,11 +237,9 @@ def read_data(data):
     return hash_table[hash_address]
 ```
 
-
 ```python
 hash_table = list([0 for i in range(10)])
 ```
-
 
 ```python
 # pring hashed index_key for each data
@@ -279,6 +261,7 @@ print(hash_function(get_key('Dingo')))
 print(hash_function(get_key('Johnson')))
 ```
 
+```pure_text
     7
     6
     5
@@ -289,8 +272,7 @@ print(hash_function(get_key('Johnson')))
     6
     5
     0
-
-
+```
 
 ```python
 # index_key = 1
@@ -316,14 +298,11 @@ save_data('Dingo', '9999999999')
 save_data('Johnson', '0000000000')
 ```
 
-
 ```python
 print(hash_table)
 ```
 
-
-
-
+```pure_text
     [[[-2635316466179689368, '0000000000']],
      0,
      [[6215479457786385290, '5555555555']],
@@ -334,21 +313,15 @@ print(hash_table)
      [[-8106021915874705937, '1111111111'], [6082400908374278295, '7777777777']],
      0,
      0]
-
-
-
+```
 
 ```python
 read_data('Dusan')
 ```
 
-
-
-
+```pure_text
     '6666666666'
-
-
-
+```
 
 ```python
 read_data("Dance") # 데이터 존재 하지 않음
@@ -368,7 +341,6 @@ read_data("Dance") # 데이터 존재 하지 않음
 - 단점
     - 해시 함수의 퍼포먼스에 따라 해시테이블의 성능이 결정됨.
     - 대신 빈 공간을 미리 확보하기 위해 해시 테이블 저장공간을 다시 확대하거나 미리 마련이 되어 있어야 함..
-
 
 ```python
 def get_key(data):
@@ -410,11 +382,9 @@ def read_data(data):
         None
 ```
 
-
 ```python
 hash_table = list([0 for i in range(12)])
 ```
-
 
 ```python
 # index_key = 1
@@ -440,14 +410,11 @@ save_data('Dingo', '9999999999')
 save_data('Johnson', '0000000000')
 ```
 
-
 ```python
 print(hash_table)
 ```
 
-
-
-
+```pure_text
     [[-2635316466179689368, '0000000000'],
      0,
      [6215479457786385290, '5555555555'],
@@ -460,8 +427,9 @@ print(hash_table)
      [-7882665379891136098, '8888888888'],
      [2760365508324363629, '9999999999'],
      0]
+```
 
-
+&nbsp
 
 ## 5. Hash 함수와 Key 생성
 
@@ -471,11 +439,9 @@ print(hash_table)
     - 어떠한 데이터도 고정된 크기의 unique한 값으로 리턴하므로, 해시 함수로 유용하게 활용 가능
     - 해시함수들의 모음이기에, 여러가지 함수를 선택할 수 있음.
 
-
 ```python
 import hashlib
 ```
-
 
 ```python
 # SHA-1를 사용한 예시
@@ -486,9 +452,9 @@ hash_address = hash_object.hexdigest()
 print(hash_address)
 ```
 
+```pure_text
     d27937f914ebe99ee315f04449678eccfb658191
-
-
+```
 
 ```python
 # SHA-256을 사용한 예시
@@ -499,11 +465,11 @@ hash_address = hash_object.hexdigest()
 print(hash_address)
 ```
 
+```pure_text
     a6b54c20a7b96eeac1a911e6da3124a560fe6dc042ebf270e3676e7095b95652
-
+```
 
 ## 5.2. SHA-256 알고리즘을 사용한 Linear Probing 방식구현
-
 
 ```python
 import hashlib
@@ -550,7 +516,6 @@ def read_data(data):
         None
 ```
 
-
 ```python
 hash_table = list([0 for i in range(12)])
 
@@ -566,6 +531,7 @@ print(hash_function(get_key('Dingo')))
 print(hash_function(get_key('Johnson')))
 ```
 
+```pure_text
     3
     6
     0
@@ -576,8 +542,7 @@ print(hash_function(get_key('Johnson')))
     4
     6
     6
-
-
+```
 
 ```python
 save_data('Dash', '1111111111')
@@ -592,14 +557,11 @@ save_data('Dingo', '9999999999')
 save_data('Johnson', '0000000000')
 ```
 
-
 ```python
 print(hash_table)
 ```
 
-
-
-
+```pure_text
     [[58168926492874022204843410240616221587430711422315320988033179720499944676464,
       '3333333333'],
      0,
@@ -622,20 +584,17 @@ print(hash_table)
      [21745812297715092507978491799105903853662369235937786557584049993744107100774,
       '0000000000'],
      0]
-
-
-
+```
 
 ```python
 read_data('Dingo')
 ```
 
-
-
-
+```pure_text
     '9999999999'
+```
 
-
+&nbsp
 
 # 6. 시간 복잡도
 
