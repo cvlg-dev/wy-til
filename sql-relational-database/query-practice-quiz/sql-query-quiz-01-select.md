@@ -1,15 +1,14 @@
-
-
 # SQL Practices - `SELECT`
 
-Practices set is from **[w3resource.com](https://www.w3resource.com)** 
+Practices set resources are referenced from **[w3resource.com](https://www.w3resource.com)** 
 
-- [SQL Exercises, Practice, Solution - Retrieve data from tables](https://www.w3resource.com/sql-exercises/sql-retrieve-from-table.php#SQLEDITOR)
+- [SQL Exercises, Practice, Solution - Retrieve data from tables](https://www.w3resource.com/sql-exercises/sql-retrieve-from-table.php)
+- [SQL Exercises, Practice, Solution - Using Boolean and Relational operators](https://www.w3resource.com/sql-exercises/sql-boolean-operators.php)
 - All practice set and answers are written in PostgreSQL
 
+* * *
 
-
-## Tables
+# Sample Tables
 
 ### `salesman`
   
@@ -21,6 +20,8 @@ Practices set is from **[w3resource.com](https://www.w3resource.com)**
 | 5006        | Mc Lyon    | Paris    | 0.14       |
 | 5007        | Paul Adam  | Rome     | 0.13       |
 | 5003        | Lauson Hen | San Jose | 0.12       |	  
+
+&nbsp
 
 ### `orders`
 	
@@ -38,7 +39,9 @@ Practices set is from **[w3resource.com](https://www.w3resource.com)**
 | 70012  | 250.45    | 2012-06-27 | 3008        | 5002        |
 | 70011  | 75.29     | 2012-08-17 | 3003        | 5007        |
 | 70013  | 3045.6    | 2012-04-25 | 3002        | 5001        |
-	
+
+&nbsp
+
 ### `customer`
 
 | customer_id | cust_name      | city       | grade | salesman_id |
@@ -51,6 +54,8 @@ Practices set is from **[w3resource.com](https://www.w3resource.com)**
 | 3009        | Geoff Cameron  | Berlin     | 100   | 5003        |
 | 3003        | Jozy Altidor   | Moscow     | 200   | 5007        |
 | 3001        | Brad Guzan     | London     |       | 5005        |
+
+&nbsp
 
 ### `nobel_win`
 
@@ -81,6 +86,8 @@ Practices set is from **[w3resource.com](https://www.w3resource.com)**
 | 1994 | Literature | Kenzaburo Oe           | Japan   | Linguist       |
 | 1994 | Economics  | Reinhard Selten        | Germany | Economist      |
 
+&nbsp
+
 ### `item_mast`
 
 | pro_id | pro_name         | pro_price | pro_com |
@@ -95,6 +102,8 @@ Practices set is from **[w3resource.com](https://www.w3resource.com)**
 | 108    | Printer          | 2600.00   | 13      |
 | 109    | Refill cartridge | 350.00    | 13      |
 | 110    | Mouse            | 250.00    | 12      |
+
+&nbsp
 
 ### `emp_details`
 
@@ -113,15 +122,18 @@ Practices set is from **[w3resource.com](https://www.w3resource.com)**
 | 555935   | Alex      | Manuel    | 57       |
 | 539569   | George    | Mardy     | 27       |
 | 733843   | Mario     | Saule     | 63       |
-	 
-## Practice Questions
+
+* * *
+
+# Practice Questions
+
+## 1. Simple `Select`
 	        
 ### 1.1. Write a SQL statement to display all the information of all salesmen.
 
 ```sql
 SELECT * FROM salesman;
 ```
-
 
 ### 1.2. Write a SQL statement to display specific columns like name and commission for all the salesmen.
 
@@ -169,6 +181,7 @@ SELECT * FROM nobel_win WHERE YEAR=1970;
 ```
 
 ```sql
+-- different interpretation of instruction
 SELECT year,subject,winner FROM nobel_win 
 WHERE year=1970; 
 ```
@@ -210,10 +223,10 @@ WHERE category='Prime Minister' AND year > 1972;
 ```
 
 ```sql
+-- different interpretation of instruction
 SELECT * FROM nobel_win
- WHERE year >1972
-  AND winner IN ('Menachem Begin',
-                  'Yitzhak Rabin');
+WHERE year >1972
+AND winner IN ('Menachem Begin', 'Yitzhak Rabin');
 ```
 
 
@@ -268,7 +281,7 @@ WHERE subject NOT LIKE 'P%'
 ORDER BY year DESC, winner;
 ```
 
-### `1.20.` Write a SQL query to find all the details of 1970 winners by the ordered to subject and winner name; but the list contain the subject Economics and Chemistry at last.
+### 1.20. Write a SQL query to find all the details of 1970 winners by the ordered to subject and winner name; but the list contain the subject Economics and Chemistry at last.
 
 ```sql
 SELECT * FROM nobel_win
@@ -279,7 +292,7 @@ ORDER BY
 	winnerl;
 ```
 
-### `1.21.` Write a SQL query to find all the products with a price between Rs.200 and Rs.600.
+### 1.21. Write a SQL query to find all the products with a price between Rs.200 and Rs.600.
 
 ```sql
 SELECT * FROM item_mast
@@ -287,6 +300,7 @@ WHERE pro_price>=200 AND pro_price<=600;
 ```
 
 ```sql
+-- better approach
 SELECT * FROM item_mast
 WHERE pro_price BETWEEN 200 AND  600;
 ```
@@ -316,14 +330,14 @@ WHERE pro_price>=250
 ORDER BY pro_price desc, pro_name;
 ```
 
-### `1.25.` Write a SQL query to display the average price of the items for each company, showing only the company code.
+### 1.25. Write a SQL query to display the average price of the items for each company, showing only the company code.
 
 ```sql
 SELECT AVG(pro_price), pro_com FROM item_mast
 GROUP BY pro_com;
 ```
 
-### `1.26.` Write a SQL query to find the name and price of the cheapest item(s). 
+### 1.26. Write a SQL query to find the name and price of the cheapest item(s). 
 
 ```sql
 SELECT pro_name, pro_price FROM item_mast
@@ -347,4 +361,118 @@ SELECT * FROM emp_details WHERE emp_lname='Snares';
 
 ```sql
 SELECT * FROM emp_details WHERE emp_dept=57;
+```
+
+
+## 2. Boolean & Relational Operators
+
+### 2.1. Write a query to display all customers with a grade above 100.
+
+```sql
+SELECT * FROM customer
+WHERE grade > 100;
+```
+
+### 2.2. Write a query statement to display all customers in New York who have a grade value above 100.
+
+```sql
+SELECT * FROM customer
+WHERE city = 'New York' AND grade > 100;
+```
+
+### 2.3. Write a SQL statement to display all customers, who are either belongs to the city New York or had a grade above 100.
+
+```sql
+SELECT * FROM customers
+WHERE city = 'New York' OR grade > 100;
+```
+
+
+### 2.4. Write a SQL statement to display all the customers, who are either belongs to the city New York or not had a grade above 100.
+
+```sql
+SELECT * FROM customer
+WHERE city = 'New York' OR grade <= 100;
+```
+
+```sql
+-- other approach
+SELECT * FROM customer
+WHERE city = 'New York' OR NOT grade > 100;
+```
+
+### 2.5. Write a SQL query to display those customers who are neither belongs to the city New York nor grade value is more than 100.
+
+```sql
+SELECT * FROM customer
+WHERE city NOT 'New York' AND NOT grade > 100;
+```
+
+```sql
+-- other approach
+SELECT * FROM customer
+WHERE NOT (city = 'New York' AND grade > 100);
+```
+
+### 2.6. Write a SQL statement to display either those orders which are not issued on date 2012-09-10 and issued by the salesman whose ID is 5005 and below or those orders which purchase amount is 1000.00 and below.
+
+```sql
+SELECT * FROM orders
+WHERE NOT (
+	(ord_date = '2012-09-10' AND salesman_id > 5005) OR 
+	purch_amt > 1000.00
+);
+```
+
+### 2.7. Write a SQL statement to display salesman_id, name, city and commission who gets the commission within the range more than 0.10% and less than 0.12%.
+
+```sql
+SELECT salesman_id, name, city, commission FROM salesman
+WHERE commission > 0.10 AND commission < 0.12;
+```
+
+### 2.8. Write a SQL query to display all orders where purchase amount less than 200 or exclude those orders which order date is on or greater than 10th Feb,2012 and customer id is below 3009.
+
+```sql
+SELECT * FROM orders
+WHERE (
+	purch_amt < 200 OR 
+	NOT(ord_date >= '2012-02-10' AND customer_id < 3009)
+);
+```
+
+### 2.9. Write a SQL statement to exclude the rows which satisfy 1) order dates are 2012-08-17 and purchase amount is below 1000 2) customer id is greater than 3005 and purchase amount is below 1000.
+
+```sql
+SELECT * FROM orders
+WHERE NOT (
+	(ord_date = '2012-08-17' OR customer_id > 3005 ) AND
+	purch_amt < 1000
+);
+```
+
+### 2.10. Write a SQL query to display order number, purchase amount, achieved, the unachieved percentage for those order which exceeds the 50% of the target value of 6000.
+
+```sql
+SELECT 
+	ord_no, 
+	purch_amt, 
+	(purch_amt / 6000 * 100) AS "Achieved%",
+	((6000-purch_amt) / 6000 * 100) AS "Unachieved%"
+FROM orders
+WHERE (purch_amt / 6000 * 100) > 50;
+```
+
+### 2.11. Write a query in SQL to find the data of employees whose last name is Dosni or Mardy.
+
+```sql
+SELECT * FROM emp_details
+WHERE emp_lname = 'Dosni' OR emp_lname = 'Mardy';
+```
+
+### 2.12. Write a query in SQL to display all the data of employees that work in department 47 or department 63.
+
+```sql
+SELECT * FROM emp_details
+WHERE emp_dept = 47 OR emp_dept = 63;
 ```
