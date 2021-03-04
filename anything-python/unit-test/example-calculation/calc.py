@@ -24,5 +24,5 @@ def divide(x, y):
     Divide Function
     """
     if y == 0:
-        raise ZeroDivisionError("Can't divide by zero")
+        raise ZeroDivisionError("Can't perform division by zero")
     return x / y
