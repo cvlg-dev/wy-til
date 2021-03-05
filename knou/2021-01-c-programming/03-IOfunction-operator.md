@@ -1,5 +1,3 @@
-
-
 # 1. 표준 입출력 함수
 
 C언어에서의 함수
@@ -110,7 +108,7 @@ void main() {
 
 ### 1.2.1. 변환기호
 
-![](https://github.com/cvlg-dev/wy-til/blob/main/anything-python/xlsxwriter/resource/03-01.png)
+![](https://github.com/cvlg-dev/wy-til/blob/main/knou/2021-01-c-programming/source/03-01.png)
 
 ```c
 void main() {
@@ -271,7 +269,7 @@ void main() {
 
 ### 1.4.1. 입력양식 변환기호
 
-![](https://github.com/cvlg-dev/wy-til/blob/main/anything-python/xlsxwriter/resource/03-02.png)
+![](https://github.com/cvlg-dev/wy-til/blob/main/knou/2021-01-c-programming/source/03-02.png)
 
 
 
@@ -459,7 +457,7 @@ void main() {
 
 - 수치에 대해 bit단위의 연산을 수행하는 연산자
 
-![](https://github.com/cvlg-dev/wy-til/blob/main/anything-python/xlsxwriter/resource/03-03.png)
+![](https://github.com/cvlg-dev/wy-til/blob/main/knou/2021-01-c-programming/source/03-03.png)
 
 |        |      |      |      |      |      |      |      |      |
 | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -490,5 +488,5 @@ void main() {
 
 ## 2.8. 연산자 우선순위
 
-![](https://github.com/cvlg-dev/wy-til/blob/main/anything-python/xlsxwriter/resource/03-04.png)
+![](https://github.com/cvlg-dev/wy-til/blob/main/knou/2021-01-c-programming/source/03-04.png)
 
