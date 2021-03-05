@@ -20,4 +20,4 @@ pip3 install xlsxwriter
 - `.data_validation()`
   - Allows data validation and restriction when inputing data to cell
 
-![](/Users/wg/dvlp/Lucas/cvlg-wy-til/anything-python/xlsxwriter/resource/image-1.png)
+![](https://github.com/cvlg-dev/wy-til/blob/main/anything-python/xlsxwriter/resource/image-1.png)
