@@ -5,7 +5,6 @@ import numpy as np
 from common.layers import MatMul, SoftmaxWithLoss
 
 
-
 class SimpleCBOW:
 
     def __init__(self, vocab_size, hidden_size):
@@ -13,7 +12,7 @@ class SimpleCBOW:
 
         # 가중치 초기화
         W_in = 0.01 * np.random.randn(V, H).astype('f')
-        W_out = 0.01 * np.random.randn(V, H).astype('f')
+        W_out = 0.01 * np.random.randn(H, V).astype('f')
 
         # 레이어
         self.in_layer_0 = MatMul(W_in)
@@ -29,7 +28,6 @@ class SimpleCBOW:
         ]
 
         self.params, self.grads = [], []
-
         for layer in layers:
             self.params += layer.params
             self.grads += layer.grads
@@ -48,8 +46,6 @@ class SimpleCBOW:
         loss = self.loss_layer.forward(score, target)
 
         return loss
-
-
 
 
     def backward(self, dout=1):

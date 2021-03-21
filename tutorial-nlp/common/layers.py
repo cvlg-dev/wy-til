@@ -80,8 +80,8 @@ class SoftmaxWithLoss:
 
     def __init__(self):
         self.params, self.grads = [], []
-        self.y = None
-        self.t = None
+        self.y = None  # output
+        self.t = None  # true
 
     def forward(self, x, t):
         self.t = t
