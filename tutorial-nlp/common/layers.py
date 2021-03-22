@@ -46,9 +46,9 @@ class SigmoidWithLoss:
 
     def forward(self, x, t):
         self.t = t
-        self.y = 1 / (1 + np.exp(-1))
+        self.y = 1 / (1 + np.exp(-x))
 
-        self.loss = cross_entropy_error(np.c_[1 - self.y, self.y], 1)
+        self.loss = cross_entropy_error(np.c_[1 - self.y, self.y], self.t)
 
         return self.loss
 
@@ -116,10 +116,13 @@ class Embedding:
         out = W[idx]
         return out
 
-    def backward(self):
+    def backward(self, dout):
         dW, = self.grads
         dW[...] = 0
-        np.add.at(dW, self.idx, dout)
+
+        for i, word_id in enumerate(self.idx):
+            dW[word_id] += dout[i]
+
         return None
 
 
