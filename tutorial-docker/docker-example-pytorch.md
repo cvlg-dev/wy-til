@@ -8,7 +8,7 @@
     - 도커 컨테이너 리스트 보기
         - `docker container ps -a` (구식 명령)
         - `docker container ls -a` (docker 1.13 부터 추가) - 사실 상 큰 차이점은 없음
-            - -a --all: 띄워져있는 컨테이너 뿐만 아니라 모든 컨테이너의 리스트를 출력
+            - -a --all: 현재 띄워져있는 컨테이너 뿐만 아니라 종료된 컨테이너를 포함한 모든 컨테이너의 리스트를 출력
 - pytorch 이미지 가져오기
     - docker command
         - `docker pull pytorch/pytorch`
