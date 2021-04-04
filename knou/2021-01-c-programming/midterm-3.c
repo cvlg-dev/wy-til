@@ -14,7 +14,43 @@
 
 // 숫자는 -100부터 100까지만 입력받는다고 가정.
 // 정보는 본인의 정보를 입력
-// if~else if~else문을 사용
+// 반드시 if~else if~else문을 사용
 
 // 무조건 분기명령인 goto문은 사용하지 않고 프로그램을 작성해야함
 // 0이 입력되기전까지 계속해서 숫자를 입력받는 부분은 while문이나 do~while문을 사용하여 프로그램 작성
+
+#include <stdio.h>
+#define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable:4996)
+
+int main(void){
+    int num;
+    int i;
+
+    printf("1부터 10사이의 홀수를 입력하시오*^^*\n");
+    printf("0을 입력하면 프로그램 종료\n\n");
+
+    do{
+        printf("구구단(홀수)을 실행할 숫자 입력 : ");
+        scanf("%d", &num);
+
+        if (num==0){
+            printf("프로그램을 종료합니다*^^* 학과: 통계데이터과학과\n");
+            break;
+        }
+        else if (num >9 || num < 1)
+            printf("1부터 10 사이의 홀수를 입력하시오*^^* 학번: 202035-368187\n\n");
+        
+        else if (num % 2 == 0)
+            printf("홀수를 입력하시오*^^* 이름: 서원영\n\n");
+        else
+        {
+            printf("%d 단 출력:\n", num);
+            for (i=1; i<10; i++) {
+                printf("%d * %d = %d\n", num, i, num*i);
+            }
+        }
+    } while(1);
+}
+
+
