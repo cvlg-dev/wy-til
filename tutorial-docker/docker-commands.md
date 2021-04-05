@@ -71,15 +71,23 @@ docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
 	docker run -d -p 3306:3306 \
 	-e MYSQL_ALLOW_EMPTY_PASSWORD=true \
 	--name mysql \
-	mysql:5.7
+	mysql/mysql-server:8.0.15
 	```	
 	- mysql 패스워드를 입력하지 않겠다는 환경변수를 `-e`로 패스
 	- `--name` : 컨테이너에 이름 설정
 	- `-d` : 백그라운드로 실행
 
-	- 실제로 실행을 하고자 한다면
+	- 실제로 실행을 해서 워드프레스용 DB를 생성함.
 		- `docker exec -it mysql mysql`
-		- mysql 이라는 컨테이너에서 mysql이라는 명령어를 실행
+			- mysql 이라는 컨테이너에서 mysql이라는 명령어를 실행
+		```
+		create database wp CHARACTER SET utf8;
+		CREATE USER wp@'%' IDENTIFIED BY 'wp';
+		GRANT ALL PRIVILEGES ON wp.* TO wp@'%' WITH GRANT OPTION;
+		flush privileges;
+		quit
+		```
+	
 	
 5. 워드프레스 블로그 실행하기 (앞서 MySQL이 실행 중인 상태에서)
 	
