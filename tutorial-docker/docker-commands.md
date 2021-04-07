@@ -1,6 +1,58 @@
 # Docker 기본 명령어
 
-## 1. run
+## 1.기초 명령어
+
+### ls (또는 ps)
+
+- `docker container ls (= docker ps)`
+	- 실행 중인 컨테이넝
+- `docker container ls -a`
+	- 실행이 중지된 컨테이너까지 출력
+
+
+### stop
+```bash
+docker stop [OPTIONS] CONTAINER [CONTAINER ... ]
+```
+
+- 실행 중인 컨테이너를 중지하는 명령어
+- 실행 중인 컨테이너를 복수로 중지시킬 수도 있음
+
+
+### rm
+```bash
+docker rm [OPTIONS] CONTAINER [CONTAINER ... ]
+```
+
+- 종료된 컨테이너를 삭제하는 명령어
+
+
+### logs
+```
+docker logs [OPTIONS] CONTAINER
+```
+- 기본 옵션
+	- `-f` : fetch. 새로고침 할 때마다 로그 발생 시 실시간으로 업데이트 됨
+	- `--detail`: 가장 마지막 부분을 보여줌
+- 컨테이너가 정상적으로 동작하는지 확인하는 좋은 방법 중 하나
+
+
+### pull 
+
+	```
+	docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+	```
+	- 도커 이미지 다운로드
+
+### rmi
+
+	```
+	docker rmi [OPTIONS] IMAGE [IMAGE...]
+	```
+	- 도커 이미지 삭제
+	- 단, 컨테이너가 실행중인 이미지는 삭제되지 않음.
+
+## 2. run
 
 ```bash
 docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
@@ -27,14 +79,40 @@ docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
 		- 예시: `docker run ubuntu:20.04`
 
 
-## 2. exec
+## 3. exec
 
 - 이미 실행중인 도커 컨테이너에 접속할 때 사용
 - 컨테이너 안에 ssh server 등을 설치하지 않고 접속함.
 
 
+## 4. network
 
-## 9. 예제
+```
+docker network create [OPTIONS] NETWORK
+```
+
+- 도커 컨테이너끼리 이름으로 통신할 수 있는 가상 네트워크를 만듬
+
+
+```
+docker network connect [OPTIONS] NETWORK CONTAINER
+```
+
+- 기존에 생성된 컨테이너에 네트워크를 추가
+
+## 5. volumn (-v)
+
+- 호스트의 드라이브를 마운트 시키는 명령어
+- 마운트된 드라이브 없이 컨테이너를 중지/삭제시키면 데이터가 날라가게 됨
+- 따라서 데이터를 저장하고 싶다면, 드라이브를 볼륨으로 마운트시켜야 함.
+
+```
+-v [my own dir]:[container dir]
+```
+
+
+
+## 6. 예제
 
 1. 우분투 이미지 컨테이너로 띄우기
 	
@@ -100,4 +178,53 @@ docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
 	 wordpress
 	 ```
 	 - 기존에 띄워져 있던 mysql 컨테이너의 데이터베이스를 이용해서 워드프레스 블로그를 띄움.
+		
+6. 네트워크
+
+	```
+	docker network create app-network
+	```
+	- app-network라는 이름으로 네트워크를 만듬 (wordpress - mysql을 연결)
+
 	
+	```
+	docker network connect app-network mysql
+	```
+	- mysql 컨테이너에 네트워크를 추가
+
+	
+	```
+	docker run -d -p 8080:80 \
+	--network=app-network \
+	 -e WORDPRESS_DB_HOST=mysql \
+	 -e WORDPRESS_DB_NAME=wp \
+	 -e WORDPRESS_DB_USER=wp \
+	 -e WORDPRESS_DB_PASSWORD=wp \
+	 wordpress
+	```
+	- 워드프레스는 이미지를 실행할 때 네트워크를 지정해볼 수 있음
+	- network는 위에서 생성한 app-network를 지정하고, host는 mysql의 이름으로 접근함.
+
+	```
+	docker stop mysql
+	docker rm mysql
+	docker run -d -p 3306:3306 \
+	-e MYSQL_ALLOW_EMPTY_PASSWORD=true \
+	--network=app-network \
+	--name mysql \
+	-v /Users/wg/dvlp/Lucas/learn_container/volumn:/var/lib/mysql \
+	mysql/mysql-server:8.0.15
+	
+	docker exec -it mysql mysql
+	create database wp CHARACTER SET utf8;
+	CREATE USER wp@'%' IDENTIFIED BY 'wp';
+	GRANT ALL PRIVILEGES ON wp.* TO wp@'%' WITH GRANT OPTION;
+	flush privileges;
+	quit	
+	```
+	- 기존의 mysql 컨테이너를 삭제하고 volumn을 마운트 시켜 다시 띄움
+	- 이 경우 mysql의 데이터베이스는 마운트된 디렉토리에 데이터가 남게 되므로, 나중에 다시 동일한 연결하더라도 데이터를 유지할 수 있음.		
+
+## Reference
+
+- [인프런 초보를 위한 도커 안내서](https://www.inflearn.com/course/%EB%8F%84%EC%BB%A4-%EC%9E%85%EB%AC%B8#)
