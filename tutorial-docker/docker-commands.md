@@ -84,6 +84,11 @@ docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
 - 이미 실행중인 도커 컨테이너에 접속할 때 사용
 - 컨테이너 안에 ssh server 등을 설치하지 않고 접속함.
 
+ex) 실행 중인 컨테이너에 bash shell에 접근하기
+```
+docker exec -it [CONTAINER ID] bin/bash
+```
+
 
 ## 4. network
 
@@ -105,6 +110,7 @@ docker network connect [OPTIONS] NETWORK CONTAINER
 - 호스트의 드라이브를 마운트 시키는 명령어
 - 마운트된 드라이브 없이 컨테이너를 중지/삭제시키면 데이터가 날라가게 됨
 - 따라서 데이터를 저장하고 싶다면, 드라이브를 볼륨으로 마운트시켜야 함.
+- 볼륨을 마운트할 때, 기존 이미지에 존재하지 않는 디렉토리를 연결시킬 경우, 이미지에 디렉토리가 새로 생성됨.
 
 ```
 -v [my own dir]:[container dir]
