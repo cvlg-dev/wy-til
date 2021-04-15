@@ -95,9 +95,12 @@ services:
 
 ```
 $ cd wp
-$ docker-compose up
+$ docker compose up
 ```
 
+## Reference
+
+https://docs.docker.com/compose/reference/up/
 
 
 
