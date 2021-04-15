@@ -58,7 +58,7 @@
     - `doker rmi {image_id}` → 이미지 삭제
 - 내가 작성한 도커 이미지, 다른 PC에서 쓰기 (도커허브를 사용하지 않는 방법)
     - `docker commit {container_id} {image name}:{tag}` → 현재의 컨테이너를 새로운 이미지로 생성
-    - `docker save -o {path for generated tar file} {image_name}` → 이미지를 tar 파일로 젖아
+    - `docker save -o {path for generated tar file} {image_name}` → 이미지를 tar 파일로 저장
         - 예) `~/dev/sample_test_image.tar pytorch/pytorch`
     - `docker load -i {path to image tar file}` → tar 파일을 이미지로 생성
 
