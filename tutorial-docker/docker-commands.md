@@ -86,7 +86,7 @@ docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
 
 ex) 실행 중인 컨테이너에 bash shell에 접근하기
 ```
-docker exec -it [CONTAINER ID] bin/bash
+docker exec -it [CONTAINER ID] /bin/bash
 ```
 
 
