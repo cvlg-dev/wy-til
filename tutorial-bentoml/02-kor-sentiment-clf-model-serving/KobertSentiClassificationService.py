@@ -1,34 +1,68 @@
+# https://docs.bentoml.org/en/latest/frameworks.html#bentoml.frameworks.transformers.TransformersModelArtifact
+
 import torch
 import numpy as np
 from torch.utils.data import TensorDataset
 from utils import load_tokenizer
 from typing import List
+from argparse import Namespace
+
+import pprint
 
 import bentoml
 from bentoml.frameworks.transformers import TransformersModelArtifact
 from bentoml.adapters import JsonInput
 from bentoml.types import JsonSerializable
 
-@bentoml.env(pip_packages=['torch', 'transformers', 'numpy'])
+
+
+@bentoml.env(pip_packages=['torch', 'transformers', 'numpy', 'sentencepiece'])
 @bentoml.artifacts([TransformersModelArtifact('model')])
 class KobertSentiClassifier(bentoml.BentoService):
+
+    def get_args(self):
+        args = {'adam_epsilon': 1e-08,
+                             'data_dir': './data',
+                             'do_eval': True,
+                             'do_train': True,
+                             'eval_batch_size': 64,
+                             'gradient_accumulation_steps': 1,
+                             'learning_rate': 5e-05,
+                             'logging_steps': 2000,
+                             'max_grad_norm': 1.0,
+                             'max_seq_len': 50,
+                             'max_steps': -1,
+                             'model_dir': './model',
+                             'model_name_or_path': 'monologg/kobert',
+                             'model_type': 'kobert',
+                             'no_cuda': False,
+                             'num_train_epochs': 5.0,
+                             'save_steps': 2000,
+                             'seed': 42,
+                             'task': 'nsmc',
+                             'test_file': 'ratings_test.txt',
+                             'train_batch_size': 32,
+                             'train_file': 'ratings_train.txt',
+                             'warmup_steps': 0,
+                             'weight_decay': 0.0}
+        self.model_args = Namespace(**args) 
+        return self.model_args           
 
     def set_device(self, device):
         torch.device(device)
         self.device = device
 
-    def get_model_args(self):
-        return torch.load('model/training_args.bin')
-
     def set_prediction_classes(self):
         self.classes = ['negative', 'positive']
 
-    def convert_text_to_tensor(self, string_text,
+    def convert_text_to_tensor(self, 
+                                string_text,
                                cls_token_segment_id=0,
                                pad_token_segment_id=0,
                                sequence_a_segment_id=0,
                                mask_padding_with_zero=True):
         tokenizer = load_tokenizer(self.model_args)
+        # tokenizer = self.artifacts.tokenizer
         # Setting based on the current model type
         cls_token = tokenizer.cls_token
         sep_token = tokenizer.sep_token
@@ -78,18 +112,21 @@ class KobertSentiClassifier(bentoml.BentoService):
     def predict(self, json_input):
         device = self.set_device('cpu')
         self.set_prediction_classes()
-        self.model_args = self.get_model_args()
+        self.get_args()
 
+        model = self.artifacts.model['model']
         dataset = self.convert_text_to_tensor(json_input['text'])
         batch = tuple(t.to(self.device) for t in dataset.tensors)
 
-        self.artifacts.model['model'].to('cpu')
-        self.artifacts.model['model'].eval()
+
+
+        model.to('cpu')
+        model.eval()
         with torch.no_grad():
             inputs = {"input_ids": batch[0],
                       "attention_mask": batch[1],
                       "labels": None}
-            outputs = self.artifacts.model['model'](**inputs)
+            outputs = model(**inputs)
             logits = outputs[0]
 
         preds = logits.detach().cpu().numpy()
