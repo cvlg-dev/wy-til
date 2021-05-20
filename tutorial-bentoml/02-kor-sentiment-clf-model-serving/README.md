@@ -23,5 +23,18 @@ curl -X POST "http://127.0.0.1:52621/predict" -H "accept: */*" -H "Content-Type:
 
 ## Deploy to GCP
 
-- Todo
+1. Build bentoml latest server image
+
+	```
+	saved_path=$(bentoml get KobertSentiClassifier:latest --print-location --quiet)
+	cd $saved_path
+	```
+	
+	```
+	gcloud builds submit --tag gcr.io/kobert-bentoml/kobert-senti-bentoml
+	```
+
+2. Deploy latest image in GCP run
+
+## Todo
     - 모델마다 라벨 붙이기 또는 이름 붙이기
