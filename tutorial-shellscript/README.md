@@ -54,56 +54,55 @@ mkdir $language
 
 1. 함수에 전달되는 파라미터로서 변수를 선언할 수 있다.
 
-- `myshell-03-1.sh`
-
-```bash
-#!/bin/bash
-
-function print() {
-    echo $1
-}
-
-print "I can speak Korean"
-````
-
+	- `myshell-03-1.sh`
+		
+		```bash
+		#!/bin/bash
+		
+		function print() {
+		    echo $1
+		}
+		
+		print "I can speak Korean"
+		```
+	
 2. 전역 변수로서의 사용
-
-- `myshell-03-2.sh`
-
-```bash
-#!/bin/bash
-
-language="English"
-
-function print() {
-    echo "I can speak $language"
-}
-
-print
-```
+	- `myshell-03-2.sh`
+	
+	```bash
+	#!/bin/bash
+	
+	language="English"
+	
+	function print() {
+	    echo "I can speak $language"
+	}
+	
+	print
+	```
 
 3. 지역 변수로서의 사용
 
-- `myshell-03-3.sh`
-
-```bash
-#!/bin/bash
-
-language="German"
-
-function learn() {
-    local learn_language="French"
-    echo "I am learning $learn_language"
-}
-
-function print() {
-    echo "I can speak $1"
-}
-
-learn
-print $language
-print $learn_language
-```
+	- `myshell-03-3.sh`
+	
+	```bash
+	#!/bin/bash
+	
+	language="German"
+	
+	function learn() {
+	    local learn_language="French"
+	    echo "I am learning $learn_language"
+	}
+	
+	function print() {
+	    echo "I can speak $1"
+	}
+	
+	learn
+	print $language
+	print $learn_language
+	```
 
 #### 1.2.3. 예약 변수 / 환경 변수 (env variables)
 
