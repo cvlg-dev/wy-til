@@ -1,4 +1,5 @@
 #!/bin/bash
+# 전역변수와 지역변수의 차이
 
 language="German"
 
