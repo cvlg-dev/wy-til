@@ -1,0 +1,8 @@
+{
+  "hostname"      : "whosgooddb.japanwest.cloudapp.azure.com",
+  "port"          : "1433",
+  "username"      : "lucas_seo",
+  "password"      : "Yaxiputeg*37",
+  "database"      : "sandbox_rnd",
+  "db_url"        : "mssql+pymssql://{}:{}@{}:{}/{}"
+}

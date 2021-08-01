@@ -2,21 +2,15 @@
 
 _All code and resources are based on the tutorial_
 
-## 1. 
-
-
-
-## 2. 회원가입
+## 1.
 
 - 실행하기
-    - `FLASK_ENV=development FLASK_APP=app.py flask run`
+  - `FLASK_ENV=development FLASK_APP=app.py flask run`
 
 
-## 2.1. `sign-up()`
+## 2 API
 
-### 2.1.1. `sign-up()` 함수
-
-### 2.1.2. POST 요청 보내기
+### 2.1. POST 요청 보내기
 
 - cURL 로 POST 요청 보내기
   - `sign-up()` 함수에서 json의 형태로 request를 받는 것을 가정하기 때문에, cURL에서는 헤더(`--header` 또는 `-H`)에 `"Content-Type: application/json"`을 패스해야 함. 
@@ -36,4 +30,8 @@ _All code and resources are based on the tutorial_
   ```bash
   http -v POST localhost:5000/sign-up name=lucas email=test@hello.co.kr password=test1234
   ```
+  
+
+
+
 
